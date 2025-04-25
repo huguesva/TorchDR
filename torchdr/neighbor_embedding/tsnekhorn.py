@@ -13,6 +13,8 @@ from torchdr.affinity import (
 )
 from torchdr.neighbor_embedding.base import NeighborEmbedding
 from torchdr.utils import cross_entropy_loss, logsumexp_red
+import numpy as np
+import torch
 
 
 class TSNEkhorn(NeighborEmbedding):
@@ -84,7 +86,7 @@ class TSNEkhorn(NeighborEmbedding):
     eps_square_affinity_in : bool, optional
         When computing the symmetric entropic affinity, whether to optimize
         on the square of the dual variables. May be more stable in practice.
-    tol_affinity_in : _type_, optional
+    tol_affinity_in : float, optional
         Precision threshold for the symmetric entropic affinity computation.
     max_iter_affinity_in : int, optional
         Number of maximum iterations for the symmetric entropic affinity computation.
@@ -109,7 +111,7 @@ class TSNEkhorn(NeighborEmbedding):
         optimizer_kwargs: Union[Dict, str] = "auto",
         scheduler: str = "constant",
         scheduler_kwargs: Optional[Dict] = None,
-        init: str = "pca",
+        init: Union[str, torch.Tensor, np.ndarray] = "pca",
         init_scaling: float = 1e-4,
         min_grad_norm: float = 1e-4,
         max_iter: int = 2000,

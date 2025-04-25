@@ -8,6 +8,8 @@ from typing import Dict, Optional, Union
 from torchdr.affinity import EntropicAffinity, StudentAffinity
 from torchdr.neighbor_embedding.base import SampledNeighborEmbedding
 from torchdr.utils import cross_entropy_loss, sum_output
+import torch
+import numpy as np
 
 
 class LargeVis(SampledNeighborEmbedding):
@@ -88,7 +90,7 @@ class LargeVis(SampledNeighborEmbedding):
         optimizer_kwargs: Union[Dict, str] = "auto",
         scheduler: str = "constant",
         scheduler_kwargs: Optional[Dict] = None,
-        init: str = "pca",
+        init: Union[str, torch.Tensor, np.ndarray] = "pca",
         init_scaling: float = 1e-4,
         min_grad_norm: float = 1e-7,
         max_iter: int = 3000,

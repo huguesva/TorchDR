@@ -4,7 +4,7 @@
 #
 # License: BSD 3-Clause License
 
-from typing import Dict, Optional
+from typing import Dict, Optional, Union
 
 from torchdr.affinity import UMAPAffinityIn, UMAPAffinityOut
 from torchdr.neighbor_embedding.base import SampledNeighborEmbedding
@@ -99,7 +99,7 @@ class UMAP(SampledNeighborEmbedding):
         optimizer_kwargs: Optional[Dict] = None,
         scheduler: str = "constant",
         scheduler_kwargs: Optional[Dict] = None,
-        init: str = "pca",
+        init: Union[str, torch.Tensor, np.ndarray] = "pca",
         init_scaling: float = 1e-4,
         min_grad_norm: float = 1e-7,
         max_iter: int = 2000,

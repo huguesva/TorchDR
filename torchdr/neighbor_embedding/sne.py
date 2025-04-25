@@ -9,6 +9,8 @@ from typing import Dict, Optional, Union
 from torchdr.affinity import EntropicAffinity, GaussianAffinity
 from torchdr.neighbor_embedding.base import SparseNeighborEmbedding
 from torchdr.utils import logsumexp_red
+import torch
+import numpy as np
 
 
 class SNE(SparseNeighborEmbedding):
@@ -83,7 +85,7 @@ class SNE(SparseNeighborEmbedding):
         optimizer_kwargs: Union[Dict, str] = "auto",
         scheduler: str = "constant",
         scheduler_kwargs: Optional[Dict] = None,
-        init: str = "pca",
+        init: Union[str, torch.Tensor, np.ndarray] = "pca",
         init_scaling: float = 1e-4,
         min_grad_norm: float = 1e-7,
         max_iter: int = 2000,

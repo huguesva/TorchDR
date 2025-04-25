@@ -9,6 +9,8 @@ from typing import Dict, Union, Optional
 from torchdr.affinity import EntropicAffinity, StudentAffinity
 from torchdr.neighbor_embedding.base import SampledNeighborEmbedding
 from torchdr.utils import logsumexp_red
+import torch
+import numpy as np
 
 
 class InfoTSNE(SampledNeighborEmbedding):
@@ -42,6 +44,8 @@ class InfoTSNE(SampledNeighborEmbedding):
         Arguments for the optimizer, by default 'auto'.
     scheduler : {'constant', 'linear'}, optional
         Learning rate scheduler.
+    scheduler_kwargs : dict, optional
+        Arguments for the scheduler, by default None.
     init : {'normal', 'pca'} or torch.Tensor of shape (n_samples, output_dim), optional
         Initialization for the embedding Z, default 'pca'.
     init_scaling : float, optional
@@ -64,7 +68,7 @@ class InfoTSNE(SampledNeighborEmbedding):
         By default 12.0 for early exaggeration.
     early_exaggeration_iter : int, optional
         Number of iterations for early exaggeration, by default 250.
-    tol_affinity : _type_, optional
+    tol_affinity : float, optional
         Precision threshold for the entropic affinity root search.
     max_iter_affinity : int, optional
         Number of maximum iterations for the entropic affinity root search.
@@ -86,7 +90,8 @@ class InfoTSNE(SampledNeighborEmbedding):
         optimizer: str = "auto",
         optimizer_kwargs: Union[Dict, str] = "auto",
         scheduler: str = "constant",
-        init: str = "pca",
+        scheduler_kwargs: Optional[Dict] = None,
+        init: Union[str, torch.Tensor, np.ndarray] = "pca",
         init_scaling: float = 1e-4,
         min_grad_norm: float = 1e-7,
         max_iter: int = 2000,
@@ -137,6 +142,7 @@ class InfoTSNE(SampledNeighborEmbedding):
             max_iter=max_iter,
             lr=lr,
             scheduler=scheduler,
+            scheduler_kwargs=scheduler_kwargs,
             init=init,
             init_scaling=init_scaling,
             device=device,

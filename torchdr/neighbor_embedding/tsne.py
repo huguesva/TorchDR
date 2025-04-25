@@ -9,6 +9,8 @@ from typing import Dict, Optional, Union
 from torchdr.affinity import EntropicAffinity, StudentAffinity
 from torchdr.neighbor_embedding.base import SparseNeighborEmbedding
 from torchdr.utils import logsumexp_red
+import torch
+import numpy as np
 
 
 class TSNE(SparseNeighborEmbedding):
@@ -64,7 +66,7 @@ class TSNE(SparseNeighborEmbedding):
         By default 12.0 for early exaggeration.
     early_exaggeration_iter : int, optional
         Number of iterations for early exaggeration, by default 250.
-    tol_affinity : _type_, optional
+    tol_affinity : float, optional
         Precision threshold for the entropic affinity root search.
     max_iter_affinity : int, optional
         Number of maximum iterations for the entropic affinity root search.
@@ -72,6 +74,8 @@ class TSNE(SparseNeighborEmbedding):
         Metric to use for the input affinity, by default 'sqeuclidean'.
     metric_out : {'sqeuclidean', 'manhattan'}, optional
         Metric to use for the output affinity, by default 'sqeuclidean'.
+    sparsity : bool, optional
+        Whether to use sparsity mode for the input affinity. Default is True.
     """  # noqa: E501
 
     def __init__(
@@ -83,7 +87,7 @@ class TSNE(SparseNeighborEmbedding):
         optimizer_kwargs: Union[Dict, str] = "auto",
         scheduler: str = "constant",
         scheduler_kwargs: Optional[Dict] = None,
-        init: str = "pca",
+        init: Union[str, torch.Tensor, np.ndarray] = "pca",
         init_scaling: float = 1e-4,
         min_grad_norm: float = 1e-7,
         max_iter: int = 2000,

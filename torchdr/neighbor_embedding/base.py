@@ -258,7 +258,7 @@ class SparseNeighborEmbedding(NeighborEmbedding):
         Tolerance for stopping criterion. Default is 1e-7.
     max_iter : int, optional
         Maximum number of iterations. Default is 2000.
-    init : str, optional
+    init : {'normal', 'pca'} or torch.Tensor of shape (n_samples, output_dim), optional
         Initialization method for the embedding. Default is "pca".
     init_scaling : float, optional
         Scaling factor for the initial embedding. Default is 1e-4.
@@ -360,7 +360,7 @@ class SparseNeighborEmbedding(NeighborEmbedding):
 
 
 class SampledNeighborEmbedding(SparseNeighborEmbedding):
-    r"""Solves the neighbor embedding problem with both sparsity and sampling.
+    r"""Solves the neighbor embedding problem with sampled negatives.
 
     It amounts to solving:
 
@@ -407,7 +407,7 @@ class SampledNeighborEmbedding(SparseNeighborEmbedding):
         Tolerance for stopping criterion. Default is 1e-7.
     max_iter : int, optional
         Maximum number of iterations. Default is 2000.
-    init : str, optional
+    init : {'normal', 'pca'} or torch.Tensor of shape (n_samples, output_dim), optional
         Initialization method for the embedding. Default is "pca".
     init_scaling : float, optional
         Scaling factor for the initial embedding. Default is 1e-4.
@@ -426,7 +426,7 @@ class SampledNeighborEmbedding(SparseNeighborEmbedding):
     early_exaggeration_iter : int, optional
         Number of iterations for early exaggeration. Default is None.
     n_negatives : int, optional
-        Number of negative samples for the repulsive loss.
+        Number of negative samples to use for the repulsive loss. Default is 5.
     """  # noqa: E501
 
     def __init__(
